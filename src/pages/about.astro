@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Artwork from '../components/Artwork.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../config';
+---
+<Layout title="A little about me" description={site.bio}>
+  <section class="container page-container about-container">
+    <a class="back-link" href="/"><Icon name="left" size={16} /> Back to the notebook</a>
+    <span class="eyebrow">THE PERSON BEHIND THE NOTES</span>
+    <h1 class="page-title" style="margin-top: 14px">Hey, I’m {site.name}<span class="heading-dot">.</span></h1>
+    <div class="about-grid">
+      <div><div class="prose about-copy">{site.about.map((paragraph) => <p>{paragraph}</p>)}</div><div class="about-interests"><h2>A few things I’m curious about</h2><div class="about-interest"><Icon name="code" /><div><h3>Building things that make sense</h3><p>Code, small tools, and experiments that turn an idea into something you can use.</p></div></div><div class="about-interest"><Icon name="book" /><div><h3>Learning in the open</h3><p>Notes from the process — not just the polished result. Questions are welcome here.</p></div></div><div class="about-interest"><Icon name="sun" /><div><h3>The everyday stuff</h3><p>Thoughts on creativity, attention, and the small discoveries between the bigger projects.</p></div></div></div><div class="about-actions"><a class="button button-primary" href={site.github} target="_blank" rel="noopener noreferrer">Say hello on GitHub <Icon name="external" size={16} /></a><a class="button button-outline" href="/#notebook">Read the notebook <Icon name="arrow" size={16} /></a></div></div>
+      <aside class="about-visual"><Artwork variant="garden" /><div class="about-visual-caption"><h3>Always a work in progress.</h3><p>A little growth, a little curiosity, every day.</p></div></aside>
+    </div>
+  </section>
+</Layout>

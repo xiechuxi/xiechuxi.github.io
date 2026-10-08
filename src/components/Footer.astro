@@ -1,0 +1,10 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config';
+---
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div><a class="footer-brand" href="/">chuxi<span>.</span></a><span class="footer-note">A small corner of a very big internet.</span></div>
+    <div class="footer-links"><span>© {new Date().getFullYear()} {site.name}</span><a href={site.github}>GitHub <Icon name="external" size={14} /></a><a href="/rss.xml">RSS <Icon name="rss" size={14} /></a><a href="#top">Back to top ↑</a></div>
+  </div>
+</footer>

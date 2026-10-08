@@ -1,0 +1,46 @@
+---
+interface Props {
+  variant?: 'notebook' | 'code' | 'garden' | 'window';
+  hero?: boolean;
+}
+const { variant = 'notebook', hero = false } = Astro.props;
+---
+<div class:list={['artwork', `artwork-${variant}`, { 'hero-artwork': hero }]} aria-hidden="true">
+  <svg viewBox="0 0 440 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {variant === 'notebook' && <>
+      <circle cx="246" cy="145" r="113" fill="#E4E7D4" />
+      <circle cx="246" cy="145" r="92" stroke="#CFD4B9" stroke-dasharray="3 6" />
+      <path d="M50 228h45m-22-22v45M358 69h26m-13-13v26" stroke="#9AA77F" stroke-width="2" />
+      <g transform="rotate(-10 218 161)">
+        <rect x="128" y="68" width="182" height="207" rx="9" fill="#38483B" fill-opacity=".12" />
+        <rect x="120" y="59" width="182" height="207" rx="9" fill="#FAF9F0" stroke="#354B3B" stroke-width="2" />
+        <path d="M143 59v207" stroke="#C7CEB6" />
+        <path d="M132 76h-19m19 25h-19m19 25h-19m19 25h-19m19 25h-19m19 25h-19m19 25h-19" stroke="#354B3B" stroke-width="3" stroke-linecap="round" />
+        <path d="M165 92h61m-61 14h90" stroke="#354B3B" stroke-width="4" stroke-linecap="round" />
+        <path d="M164 128h115m-115 17h96m-96 17h107m-107 17h72" stroke="#D1D5C4" stroke-width="2" stroke-linecap="round" />
+        <circle cx="181" cy="221" r="18" fill="#E5B98B" />
+        <path d="m175 221 4 4 9-10m18 4h65m-65 13h48" stroke="#657956" stroke-width="2" stroke-linecap="round" />
+      </g>
+      <g transform="rotate(23 325 194)"><rect x="319" y="127" width="10" height="119" rx="4" fill="#D78E62" /><path d="m319 242 5 15 5-15" fill="#354B3B" /><path d="M319 139h10" stroke="#F6DDC0" stroke-width="3" /></g>
+      <path d="m339 38 4 13 13 4-13 4-4 13-4-13-13-4 13-4 4-13Z" fill="#D78E62" />
+      <path d="M59 119c11-15 29-17 45-11m-8-9 9 9-12 6" stroke="#83936D" stroke-width="2" stroke-linecap="round" />
+      <circle cx="364" cy="239" r="23" fill="#F9F7EF" stroke="#ACB695" stroke-width="2" /><circle cx="364" cy="239" r="15" fill="#98735B" /><path d="M386 236c18-9 19 17 0 13" stroke="#ACB695" stroke-width="3" />
+    </>}
+    {variant === 'code' && <>
+      <circle cx="222" cy="158" r="108" fill="#DDDCCD" />
+      <g transform="rotate(-5 220 160)"><rect x="100" y="72" width="244" height="170" rx="12" fill="#354B3B" /><path d="M100 105h244" stroke="#71806C" /><circle cx="119" cy="89" r="4" fill="#DFA984" /><circle cx="135" cy="89" r="4" fill="#E8D4A8" /><circle cx="151" cy="89" r="4" fill="#A4B491" /><path d="m177 139-22 22 22 22m88-44 22 22-22 22m-36-53-15 65" stroke="#D8E2C6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /><path d="M169 217h99" stroke="#71806C" stroke-width="3" stroke-linecap="round" /></g>
+      <path d="m355 49 3 10 10 3-10 3-3 10-3-10-10-3 10-3 3-10Z" fill="#BD885E" /><path d="M57 234h27m-13-13v26" stroke="#A2AA8A" stroke-width="2" />
+    </>}
+    {variant === 'garden' && <>
+      <circle cx="220" cy="149" r="103" fill="#DDE3CF" /><path d="M103 250h232" stroke="#9BA989" stroke-width="2" stroke-linecap="round" />
+      <path d="M195 175h92l-14 75h-64l-14-75Z" fill="#C79471" /><path d="M189 174h104v14H189z" fill="#DCAD87" /><path d="M240 175v-66" stroke="#536B48" stroke-width="4" stroke-linecap="round" />
+      <path d="M240 141c-41 5-69-22-65-54 36-4 65 19 65 54Z" fill="#82996A" /><path d="M242 122c0-36 28-57 58-52 0 33-23 52-58 52Z" fill="#536B48" /><path d="M240 106c-24-15-25-43-9-59 24 14 30 38 9 59Z" fill="#A5B78C" />
+      <path d="M137 231v-43m0 23c-24 0-36-13-33-32 22-1 33 10 33 32m0-11c0-23 16-33 34-31 0 22-14 31-34 31" stroke="#82996A" stroke-width="3" stroke-linejoin="round" /><path d="M119 228h37l-5 22h-27l-5-22Z" fill="#E0C7A2" />
+      <circle cx="332" cy="59" r="13" fill="#E6C98C" /><path d="M318 213h29m-14-14v29" stroke="#A2AA8A" stroke-width="2" />
+    </>}
+    {variant === 'window' && <>
+      <circle cx="220" cy="149" r="111" fill="#E4DED2" /><path d="M152 231V109a70 70 0 0 1 140 0v122H152Z" fill="#F8F4E9" stroke="#AA9277" stroke-width="3" /><path d="M163 220V110a59 59 0 0 1 118 0v110H163Z" fill="#D5DECA" /><circle cx="251" cy="104" r="19" fill="#F4E1AB" /><path d="m163 191 42-53 34 38 22-23 20 31v36H163v-29Z" fill="#A2B18A" /><path d="m163 204 54-31 64 37v10H163v-16Z" fill="#788C67" /><path d="M222 50v176m-65-77h130" stroke="#AA9277" stroke-width="5" /><path d="M142 233h161" stroke="#AA9277" stroke-width="6" stroke-linecap="round" /><path d="M98 250h246" stroke="#BEB09C" stroke-width="2" /><path d="m112 96 4 13 13 4-13 4-4 13-4-13-13-4 13-4 4-13Z" fill="#C79471" />
+    </>}
+  </svg>
+  {hero && <><span class="artwork-caption">a little space for big ideas</span><span class="artwork-sticker"><span>✳</span> Always learning</span></>}
+</div>

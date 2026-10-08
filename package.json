@@ -1,0 +1,28 @@
+{
+  "name": "chuxi-notebook",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "check": "astro check",
+    "build": "astro check && astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "astro": "^7.3.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "github-slugger": "^2.0.0",
+    "gray-matter": "^4.0.3",
+    "typescript": "^5.9.3"
+  }
+}

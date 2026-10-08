@@ -1,0 +1,56 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Artwork from '../../components/Artwork.astro';
+import Icon from '../../components/Icon.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../lib/posts';
+import { formatDate, readingTime } from '../../lib/blog.mjs';
+import { site } from '../../config';
+
+export async function getStaticPaths() {
+  return (await getPosts()).map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+interface Props { post: CollectionEntry<'blog'>; }
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const sections = headings.filter((heading) => heading.depth === 2);
+const otherPosts = (await getPosts()).filter((entry) => entry.id !== post.id);
+const relatedPosts = [...otherPosts.filter((entry) => entry.data.category === post.data.category), ...otherPosts.filter((entry) => entry.data.category !== post.data.category)].slice(0, 2);
+---
+<Layout title={post.data.title} description={post.data.description} article pubDate={post.data.pubDate}>
+  <article class="container page-container">
+    <a class="back-link" href="/#notebook"><Icon name="left" size={16} /> Back to the notebook</a>
+    <header class="article-header">
+      <a class="category-label" href={`/?topic=${encodeURIComponent(post.data.category)}#notebook`}>{post.data.category}</a>
+      <h1>{post.data.title}</h1>
+      <p class="article-deck">{post.data.description}</p>
+      <div class="article-byline"><a href="/about/" class="byline-avatar" aria-label={`About ${site.name}`}>cx</a><span>By {site.name}</span><span aria-hidden="true">·</span><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><span aria-hidden="true">·</span><span>{readingTime(post.body ?? '')} min read</span></div>
+    </header>
+    <div class="article-cover"><Artwork variant={post.data.artwork} /></div>
+    <div class="article-body">
+      <div class="prose"><Content /></div>
+      {sections.length > 0 && <nav class="table-of-contents" aria-label="On this page"><span class="tiny-label">IN THIS NOTE</span><ol>{sections.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>}
+    </div>
+    <footer class="article-footer"><div class="article-tags">{post.data.tags.map((tag) => <a href={`/?q=${encodeURIComponent(tag)}#notebook`}>#{tag}</a>)}</div><button class="button button-outline" data-copy-link type="button" hidden><Icon name="copy" size={15} /><span>Copy link</span></button><span class="sr-only" data-copy-status role="status" aria-live="polite"></span></footer>
+    {relatedPosts.length > 0 && <section class="related-posts" aria-labelledby="related-title"><h2 id="related-title">A few more pages to turn.</h2><div class="posts-grid">{relatedPosts.map((entry) => <PostCard post={entry} />)}</div></section>}
+  </article>
+</Layout>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-copy-link]');
+  const status = document.querySelector<HTMLElement>('[data-copy-status]');
+  if (button && navigator.clipboard) {
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(location.href);
+        const label = button.querySelector('span');
+        if (label) label.textContent = 'Link copied!';
+        if (status) status.textContent = 'Article link copied to clipboard.';
+      } catch {
+        if (status) status.textContent = 'Could not copy the link. Copy the address from your browser instead.';
+      }
+    });
+  }
+</script>

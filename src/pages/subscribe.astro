@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+const feedUrl = new URL('/rss.xml', Astro.site).href;
+---
+<Layout title="Follow the notebook" description="Follow new posts with RSS. No account, no algorithm, just the notebook at your own pace.">
+  <section class="container page-container subscribe-page">
+    <a class="back-link" href="/#notebook"><Icon name="left" size={16} /> Back to the notebook</a>
+    <span class="eyebrow"><Icon name="rss" size={18} /> KEEP IN TOUCH, QUIETLY</span>
+    <h1 class="page-title">Good thoughts.<br />No algorithm.</h1>
+    <p>You can follow this notebook with RSS, a simple way to collect new posts from the websites you like. No account on this site, no email address to hand over, and nothing competing for your attention.</p>
+    <div class="feed-box"><a class="feed-url" href="/rss.xml" data-feed-url={feedUrl}>{feedUrl}</a><button type="button" class="button button-outline" data-copy-feed hidden><Icon name="copy" size={15} /><span>Copy feed URL</span></button></div>
+    <p class="sr-only" role="status" aria-live="polite" data-feed-status></p>
+    <div class="subscribe-instructions"><h2>A little guide to getting started</h2><ol><li>Open your favorite RSS reader, such as Feedly, Inoreader, or NetNewsWire.</li><li>Add a new feed and paste the URL above.</li><li>New notes will appear in your reader after they’re published.</li></ol></div>
+    <div class="feed-actions"><a class="text-link" href="/rss.xml">View the feed <Icon name="external" size={16} /></a><a class="text-link" href="/#notebook">Browse the notes <Icon name="arrow" size={16} /></a></div>
+  </section>
+</Layout>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-copy-feed]');
+  const feed = document.querySelector<HTMLElement>('[data-feed-url]');
+  const status = document.querySelector<HTMLElement>('[data-feed-status]');
+  if (button && navigator.clipboard) {
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(feed?.dataset.feedUrl ?? '');
+        const label = button.querySelector('span');
+        if (label) label.textContent = 'Copied!';
+        if (status) status.textContent = 'RSS feed URL copied to clipboard.';
+      } catch {
+        if (status) status.textContent = 'Could not copy the feed URL. Select the URL above and copy it manually.';
+      }
+    });
+  }
+</script>

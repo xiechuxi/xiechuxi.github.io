@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config';
+const path = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label={`${site.name}'s notebook, home`}>
+      <span class="brand-symbol">✳</span><span class="brand-name">chuxi<span>.</span></span>
+      <span class="brand-tagline">a personal notebook</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a class:list={['nav-link', { active: path === '/' || path.startsWith('/blog/') }]} href="/#notebook" aria-current={path === '/' || path.startsWith('/blog/') ? 'page' : undefined}>Notebook</a>
+      <a class:list={['nav-link', { active: path === '/about/' }]} href="/about/" aria-current={path === '/about/' ? 'page' : undefined}>About me</a>
+      <span class="nav-divider" aria-hidden="true"></span>
+      <a class="icon-button github-nav" href={site.github} target="_blank" rel="noopener noreferrer" aria-label="Chuxi on GitHub (opens in a new tab)"><Icon name="github" size={18} /></a>
+      <button class="icon-button theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false" hidden>
+        <span class="theme-moon"><Icon name="moon" size={19} /></span>
+        <span class="theme-sun"><Icon name="sun" size={19} /></span>
+      </button>
+    </nav>
+  </div>
+</header>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const preference = matchMedia('(prefers-color-scheme: dark)');
+  function updateButton() {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    button?.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} theme`);
+    button?.setAttribute('aria-pressed', String(dark));
+  }
+  if (button) {
+    button.hidden = false;
+    updateButton();
+    button.addEventListener('click', () => {
+      const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = theme;
+      try { localStorage.setItem('notebook-theme', theme); } catch { /* Theme still works without storage. */ }
+      updateButton();
+    });
+  }
+  preference.addEventListener('change', (event) => {
+    let saved: string | null = null;
+    try { saved = localStorage.getItem('notebook-theme'); } catch { /* Storage is optional. */ }
+    if (!saved) {
+      document.documentElement.dataset.theme = event.matches ? 'dark' : 'light';
+      updateButton();
+    }
+  });
+</script>

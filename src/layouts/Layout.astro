@@ -1,0 +1,53 @@
+---
+import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/fraunces';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../config';
+interface Props {
+  title?: string;
+  description?: string;
+  article?: boolean;
+  pubDate?: Date;
+}
+const { title, description = site.description, article = false, pubDate } = Astro.props;
+const pageTitle = title ? `${title} — ${site.title}` : site.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en" id="top">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f8f9f3" />
+    <title>{pageTitle}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={site.title} href={new URL('/rss.xml', Astro.site)} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:image" content={new URL('/social.svg', Astro.site)} />
+    <meta property="og:image:alt" content="Chuxi’s notebook: a curious mind, an open notebook." />
+    <meta name="twitter:card" content="summary" />
+    {pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+    <script is:inline>
+      (() => {
+        let saved;
+        try { saved = localStorage.getItem('notebook-theme'); } catch {}
+        document.documentElement.dataset.theme = saved === 'light' || saved === 'dark'
+          ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main"><slot /></main>
+    <Footer />
+  </body>
+</html>
