@@ -1,4 +1,4 @@
-export const categories = ['All posts', 'Building', 'Learning', 'Life & thoughts'];
+export const categories = ['All posts', 'Building', 'Learning', 'AI & technology', 'Life & thoughts'];
 
 /** @param {string} body */
 export function readingTime(body = '') {

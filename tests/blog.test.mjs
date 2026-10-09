@@ -18,7 +18,7 @@ test('all search words must match and whitespace is ignored', () => {
 test('category and query filters work together', () => {
   assert.equal(matchesPost(post, 'tools', 'Building'), true);
   assert.equal(matchesPost(post, 'tools', 'Learning'), false);
-  assert.deepEqual(categories, ['All posts', 'Building', 'Learning', 'Life & thoughts']);
+  assert.deepEqual(categories, ['All posts', 'Building', 'Learning', 'AI & technology', 'Life & thoughts']);
 });
 test('reading time has a one-minute minimum and handles longer posts', () => {
   assert.equal(readingTime(''), 1);

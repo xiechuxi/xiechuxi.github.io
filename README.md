@@ -22,15 +22,15 @@ Use `npm run build` to validate types and create the static site. Use `npm run p
 
 Start with [src/config.ts](src/config.ts): edit your display name, introduction, short bio, GitHub URL, and about paragraphs. The initial personal copy is editable starter text, not a verified biography.
 
-The five visible articles are original **sample posts** to demonstrate the layout. Replace or remove them before publishing if you prefer to start with only your own writing. Colors, spacing, and responsive styles are in [src/styles/global.css](src/styles/global.css).
+The notebook now contains your first published article, about generative UI and AI-agent workflows. Colors, spacing, and responsive styles are in [src/styles/global.css](src/styles/global.css).
 
 ## Publish a post
 
-1. Copy [src/content/blog/your-next-note.md](src/content/blog/your-next-note.md) to a new Markdown file in the same folder with a URL-friendly name, such as `my-first-post.md`.
+1. Create a new Markdown file in `src/content/blog/` with a URL-friendly name, such as `my-next-post.md`.
 2. Set the frontmatter: `title`, `description`, `pubDate` (YYYY-MM-DD), `category`, and `tags`.
-3. Choose a category: `Building`, `Learning`, or `Life & thoughts`. Choose optional `artwork`: `notebook`, `code`, `garden`, or `window`.
+3. Choose a category: `Building`, `Learning`, `AI & technology`, or `Life & thoughts`. Choose optional `artwork`: `notebook`, `code`, `garden`, or `window`.
 4. Write your post below the frontmatter using Markdown. Headings, links, lists, images, and fenced code blocks are supported.
-5. Set `draft: false` (or remove it) when ready. Drafts are excluded from the homepage, article routes, RSS, and sitemap, **including local previews**. Preview a post by setting it to published locally before pushing.
+5. Set `draft: true` to keep an article out of the homepage, article routes, RSS, and sitemap; remove it or set it to `false` when ready to publish. Drafts stay private even in local previews.
 6. Optionally set `featured: true`. If multiple posts are featured, the newest one wins. Otherwise, the newest post is featured automatically.
 7. Check with `npm run build` and `npm test`, then commit and push to `main`.
 
